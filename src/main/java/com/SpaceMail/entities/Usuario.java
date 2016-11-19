@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 
 @Entity
+@Embeddable
 @Table(name = "usuarios")
 public class Usuario {
 
@@ -43,4 +44,5 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

@@ -30,8 +30,12 @@ public class UsuarioController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<LoginResponseWrapper> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd){
+        System.out.println(nombreUsuario);
+        System.out.println(pwd);
         Usuario u = usuarioService.login(nombreUsuario, pwd);
+
         if (null != u) {
+            System.out.println("trajo el user");
             String sessionId = sessionData.addSession(u);
             return new ResponseEntity<LoginResponseWrapper>(new LoginResponseWrapper(sessionId), HttpStatus.OK);
         }
