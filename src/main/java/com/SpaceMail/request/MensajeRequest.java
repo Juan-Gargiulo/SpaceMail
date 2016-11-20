@@ -13,7 +13,7 @@ public class MensajeRequest {
     private Integer remitente;
     @JsonProperty("asunto")
     private String asunto;
-    @JsonProperty("mensage")
+    @JsonProperty("mensaje")
     private String mensage;
     @JsonProperty("recipientes")
     private ArrayList<Integer> recipientes;

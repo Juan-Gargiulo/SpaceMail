@@ -1,6 +1,6 @@
 package com.SpaceMail.services;
 
-import com.SpaceMail.entities.Usuario;
+import com.SpaceMail.entities.*;
 import com.SpaceMail.persistence.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,20 +19,29 @@ public class UsuarioService {
     }
 
     public Usuario login(String nombreUsuario, String password) {
-        return usuarioDao.get(nombreUsuario,password);
+        return usuarioDao.get(nombreUsuario, password);
     }
 
     public void newUsuario(String nombreUsuario,
                            String password,
-                           String Appellido,
+                           String nombre,
+                           String apellido,
                            String direccion,
+                           String telefono,
                            Integer id_ciudad,
                            String emailAlternativo) {
 
         Usuario u = new Usuario();
         u.setNombreUsuario(nombreUsuario);
         u.setPassword(password);
+        u.setNombre(nombre);
+        u.setApellido(apellido);
+        u.setDirección(direccion);
+        u.setTeléfono(telefono);
         u.setEmailAlternativo(emailAlternativo);
+        Ciudad c = new Ciudad();
+        c.setId(id_ciudad);
+        u.setCiudad(c);
         this.usuarioDao.save(u);
     }
 }

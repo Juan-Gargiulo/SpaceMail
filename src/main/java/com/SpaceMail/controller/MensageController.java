@@ -35,4 +35,13 @@ public class MensageController {
         }
     }
 
+    @RequestMapping(value = "/mensaje", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteMensaje(@RequestBody MensajeRequest request) {
+        try {
+            //HACER LO QUE CORRESPONDA :P
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

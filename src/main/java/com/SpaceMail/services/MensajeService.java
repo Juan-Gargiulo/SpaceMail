@@ -34,7 +34,7 @@ public class MensajeService {
 
         //cargo los recipientes
         ArrayList<Usuario> recipPersist = new ArrayList<Usuario>();
-        for (Integer i : recipientes ){
+        for (Integer i : recipientes) {
             Usuario rem2 = new Usuario();
             rem2.setId(i);
             recipPersist.add(rem2);

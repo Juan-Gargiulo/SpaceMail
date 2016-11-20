@@ -11,16 +11,17 @@ import javax.persistence.*;
 @Table(name = "usuarios")
 public class Usuario {
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     private String nombreUsuario;
     private String password;
 
-    private String Nombre;
-    private String Apellido;
-    private String Dirección;
-    private String Teléfono;
+    private String nombre;
+    private String apellido;
+    private String dirección;
+    private String teléfono;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_ciudad")
@@ -36,7 +37,7 @@ public class Usuario {
         this.id = id;
     }
 
-    @Column(name="nombre_usuario", nullable = false, length = 30)
+    @Column(name="nombre_usuario", nullable = false, length = 30, unique = true)
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -56,47 +57,46 @@ public class Usuario {
 
     @Column(name="nombre", length = 30)
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
 
     @Column(name="apellido", length = 30)
     public String getApellido() {
-        return Apellido;
+        return apellido;
     }
 
     public void setApellido(String apellido) {
-        Apellido = apellido;
+        this.apellido = apellido;
     }
 
     @Column(name="direccion", length = 30)
     public String getDirección() {
-        return Dirección;
+        return dirección;
     }
 
     public void setDirección(String dirección) {
-        Dirección = dirección;
+        this.dirección = dirección;
     }
 
     @Column(name="telefono", length = 30)
     public String getTeléfono() {
-        return Teléfono;
+        return teléfono;
     }
 
     public void setTeléfono(String teléfono) {
-        Teléfono = teléfono;
+        this.teléfono = teléfono;
     }
 
-    @Column(name="ciudad", length = 30)
     public Ciudad getCiudad() {
         return ciudad;
     }
 
     public void setCiudad(Ciudad ciudad) {
-        ciudad = ciudad;
+        this.ciudad = ciudad;
     }
 
     @Column(name="emailAlternativo", nullable = false, length = 30)

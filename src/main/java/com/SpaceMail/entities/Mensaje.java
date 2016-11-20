@@ -10,24 +10,25 @@ import java.util.List;
 @Table(name = "mensajes")
 public class Mensaje {
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id_usuario")
+    @JoinColumn(name = "id_usuario")
     private Usuario remitente;
 
     @OneToMany
-    @JoinTable(name="mensaje_usuario",
-               joinColumns=@JoinColumn(name="id_mensaje"),
-               inverseJoinColumns=@JoinColumn(name="id_usuario"))
+    @JoinTable(name = "mensaje_usuario",
+            joinColumns = @JoinColumn(name = "id_mensaje"),
+            inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     private List<Usuario> recipientes;
     private String asunto;
     private String mensage;
     //private Date fechaEnvio;
     //private List<String> adjuntos;
 
-    public Mensaje(){
+    public Mensaje() {
     }
 
 
@@ -47,17 +48,15 @@ public class Mensaje {
         this.remitente = remitente;
     }
 
-
     public List<Usuario> getRecipientes() {
         return recipientes;
     }
-
 
     public void setRecipientes(List<Usuario> recipientes) {
         this.recipientes = recipientes;
     }
 
-    @Column(name="asunto", nullable = false, length = 20)
+    @Column(name = "asunto", nullable = false, length = 20)
     public String getAsunto() {
         return asunto;
     }
@@ -66,7 +65,7 @@ public class Mensaje {
         this.asunto = asunto;
     }
 
-    @Column(name="mensage", nullable = false, length = 500)
+    @Column(name = "mensage", nullable = false, length = 500)
     public String getMensage() {
         return mensage;
     }

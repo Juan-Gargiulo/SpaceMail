@@ -3,19 +3,19 @@ package com.SpaceMail.entities;
 import javax.persistence.*;
 
 /**
- * Created by juan on 11/20/16.
+ * Created by User on 20/11/2016.
  */
 @Entity
-@Table(name = "ciudades")
-public class Ciudad {
+@Table(name = "provincias")
+public class Provincia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_provincia")
-    private Provincia provincia;
+    @JoinColumn(name = "id_pais")
+    private Pais pais;
 
     public int getId() {
         return id;
@@ -25,7 +25,7 @@ public class Ciudad {
         this.id = id;
     }
 
-    @Column(name = "nombre_ciudad", nullable = false, length = 30)
+    @Column(name = "nombre_provincia", nullable = false, length = 30)
     public String getNombre() {
         return nombre;
     }
@@ -34,11 +34,11 @@ public class Ciudad {
         this.nombre = nombre;
     }
 
-    public Provincia getProvincia() {
-        return provincia;
+    public Pais getPais() {
+        return pais;
     }
 
-    public void setProvincia(Provincia provincia) {
-        this.provincia = provincia;
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 }

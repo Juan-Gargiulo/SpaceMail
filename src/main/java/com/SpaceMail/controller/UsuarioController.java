@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(
         value = "/",
-        produces = MediaType.APPLICATION_JSON_VALUE
+        produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE
 )
 public class UsuarioController {
 
@@ -29,8 +29,9 @@ public class UsuarioController {
     SessionData sessionData;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody
-    ResponseEntity<LoginResponseWrapper> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd){
+    public
+    @ResponseBody
+    ResponseEntity<LoginResponseWrapper> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd) {
         System.out.println(nombreUsuario);
         System.out.println(pwd);
         Usuario u = usuarioService.login(nombreUsuario, pwd);
@@ -44,21 +45,49 @@ public class UsuarioController {
     }
 
     @RequestMapping("/logout")
-    public @ResponseBody ResponseEntity getById(@RequestHeader("sessionid") String sessionId) {
+    public
+    @ResponseBody
+    ResponseEntity getById(@RequestHeader("sessionid") String sessionId) {
         sessionData.removeSession(sessionId);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/registrar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addUsuario(@RequestBody UsuarioRequest request) {
+    @RequestMapping(value = "/registrar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    //public ResponseEntity addUsuario(@RequestBody UsuarioRequest request) {
+    public ResponseEntity addUsuario(@RequestParam("usr")
+                                             String nombreUsuario,
+                                     @RequestParam("pwd")
+                                             String password,
+                                     @RequestParam("apellido")
+                                             String apellido,
+                                     @RequestParam("nombre")
+                                             String nombre,
+                                     @RequestParam("direccion")
+                                             String direccion,
+                                     @RequestParam("tel")
+                                             String telefono,
+                                     @RequestParam("ciudad")
+                                             Integer ciudad,
+                                     @RequestParam("emailAlt")
+                                             String emailAlternativo) {
         try {
-            usuarioService.newUsuario(request.getNombreUsuario(),
-                                      request.getPassword(),
-                                      request.getApellido(),
-                                      request.getDireccion(),
-                                      request.getCiudad(),
-                                      request.getEmailAlternativo()
-                                     );
+            usuarioService.newUsuario(
+                    nombreUsuario,
+                    password,
+                    nombre,
+                    apellido,
+                    direccion,
+                    telefono,
+                    ciudad,
+                    emailAlternativo
+            );
+            /*request.getNombreUsuario(),
+                    request.getPassword(),
+                    request.getApellido(),
+                    request.getDireccion(),
+                    request.getCiudad(),
+                    request.getEmailAlternativo()
+            );*/
 
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {

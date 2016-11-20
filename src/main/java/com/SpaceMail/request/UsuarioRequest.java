@@ -1,6 +1,7 @@
 package com.SpaceMail.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by User on 20/11/2016.
