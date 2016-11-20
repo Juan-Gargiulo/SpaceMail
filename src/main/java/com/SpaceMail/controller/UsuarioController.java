@@ -52,7 +52,14 @@ public class UsuarioController {
     @RequestMapping(value = "/registrar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addUsuario(@RequestBody UsuarioRequest request) {
         try {
-            usuarioService.newUsuario(request.getNombreUsuario(), request.getPassword(), request.getEmailAlternativo() );
+            usuarioService.newUsuario(request.getNombreUsuario(),
+                                      request.getPassword(),
+                                      request.getApellido(),
+                                      request.getDireccion(),
+                                      request.getCiudad(),
+                                      request.getEmailAlternativo()
+                                     );
+
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

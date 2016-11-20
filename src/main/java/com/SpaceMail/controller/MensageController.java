@@ -28,7 +28,7 @@ public class MensageController {
     @RequestMapping(value = "/mensaje", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addMensaje(@RequestBody MensajeRequest request) {
         try {
-            mensajeService.newMensaje(request.getAsunto(), request.getMensage() );
+            mensajeService.newMensaje(request.getAsunto(), request.getMensage(), request.getRemitente(), request.getRecipientes() );
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

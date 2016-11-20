@@ -22,7 +22,13 @@ public class UsuarioService {
         return usuarioDao.get(nombreUsuario,password);
     }
 
-    public void newUsuario(String nombreUsuario, String password, String emailAlternativo){
+    public void newUsuario(String nombreUsuario,
+                           String password,
+                           String Appellido,
+                           String direccion,
+                           Integer id_ciudad,
+                           String emailAlternativo) {
+
         Usuario u = new Usuario();
         u.setNombreUsuario(nombreUsuario);
         u.setPassword(password);

@@ -1,7 +1,6 @@
 package com.SpaceMail.entities;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public class Mensaje {
     private List<Usuario> recipientes;
     private String asunto;
     private String mensage;
-    private Date fechaEnvio;
+    //private Date fechaEnvio;
     //private List<String> adjuntos;
 
     public Mensaje(){
@@ -76,14 +75,14 @@ public class Mensaje {
         this.mensage = mensage;
     }
 
-    @Column(name="fechaEnvio", nullable = true)
-    public Date getFechaEnvio() {
-        return fechaEnvio;
-    }
-
-    public void setFechaEnvio(Date fechaEnvio) {
-        this.fechaEnvio = fechaEnvio;
-    }
+//    @Column(name="fechaEnvio", nullable = true)
+//    public Date getFechaEnvio() {
+//        return fechaEnvio;
+//    }
+//
+//    public void setFechaEnvio(Date fechaEnvio) {
+//        this.fechaEnvio = fechaEnvio;
+//    }
 
 
 //    public List<String> getAdjuntos() {

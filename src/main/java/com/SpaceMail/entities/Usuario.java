@@ -21,9 +21,11 @@ public class Usuario {
     private String Apellido;
     private String Dirección;
     private String Teléfono;
-    private String Ciudad;
-    private String País;
-    private String Provincia;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_ciudad")
+    private Ciudad ciudad;
+
     private String emailAlternativo;
 
     public int getId() {
@@ -89,30 +91,12 @@ public class Usuario {
     }
 
     @Column(name="ciudad", length = 30)
-    public String getCiudad() {
-        return Ciudad;
+    public Ciudad getCiudad() {
+        return ciudad;
     }
 
-    public void setCiudad(String ciudad) {
-        Ciudad = ciudad;
-    }
-
-    @Column(name="pais", length = 30)
-    public String getPaís() {
-        return País;
-    }
-
-    public void setPaís(String país) {
-        País = país;
-    }
-
-    @Column(name="provincia", length = 30)
-    public String getProvincia() {
-        return Provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        Provincia = provincia;
+    public void setCiudad(Ciudad ciudad) {
+        ciudad = ciudad;
     }
 
     @Column(name="emailAlternativo", nullable = false, length = 30)

@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class MensajeRequest {
 
+    @JsonProperty("remitente")
+    private Integer remitente;
     @JsonProperty("asunto")
     private String asunto;
     @JsonProperty("mensage")
@@ -17,21 +19,14 @@ public class MensajeRequest {
     private ArrayList<Integer> recipientes;
 
 
-//    public Usuario getRemitente() {
-//        return remitente;
-//    }
-//
-//    public void setRemitente(Usuario remitente) {
-//        this.remitente = remitente;
-//    }
-//
-//    public List<Usuario> getRecipientes() {
-//        return recipientes;
-//    }
-//
-//    public void setRecipientes(List<Usuario> recipientes) {
-//        this.recipientes = recipientes;
-//    }
+    public Integer getRemitente() {
+        return remitente;
+    }
+
+    public void setRemitente(Integer remitente) {
+        this.remitente = remitente;
+    }
+
 
     public String getAsunto() {
         return asunto;
@@ -40,6 +35,7 @@ public class MensajeRequest {
     public void setAsunto(String asunto) {
         this.asunto = asunto;
     }
+
 
     public String getMensage() {
         return mensage;
@@ -57,4 +53,6 @@ public class MensajeRequest {
     public void setRecipientes(ArrayList<Integer> recipientes) {
         this.recipientes = recipientes;
     }
+
+
 }
