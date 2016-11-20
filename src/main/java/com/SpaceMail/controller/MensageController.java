@@ -26,7 +26,7 @@ public class MensageController {
     MensajeService mensajeService;
 
     @RequestMapping(value = "/mensaje", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addPersona(@RequestBody MensajeRequest request) {
+    public ResponseEntity addMensaje(@RequestBody MensajeRequest request) {
         try {
             mensajeService.newMensaje(request.getAsunto(), request.getMensage() );
             return new ResponseEntity(HttpStatus.CREATED);

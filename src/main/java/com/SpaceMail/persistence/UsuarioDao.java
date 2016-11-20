@@ -3,6 +3,7 @@ package com.SpaceMail.persistence;
 import com.SpaceMail.entities.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,8 +31,12 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     @Override
-    void save(Usuario value) {
-
+    public void save(Usuario u) {
+        Session session = this.sessionFactory.openSession();
+        Transaction t = session.beginTransaction();
+        session.save(u);
+        t.commit();
+        session.close();
     }
 
     public Usuario get(String nombreUsuario, String password) {
@@ -45,5 +50,4 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return null;
         }
     }
-
 }

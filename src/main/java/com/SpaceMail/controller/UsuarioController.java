@@ -1,6 +1,7 @@
 package com.SpaceMail.controller;
 
 import com.SpaceMail.entities.Usuario;
+import com.SpaceMail.request.UsuarioRequest;
 import com.SpaceMail.response.LoginResponseWrapper;
 import com.SpaceMail.services.UsuarioService;
 import com.SpaceMail.util.SessionData;
@@ -42,12 +43,19 @@ public class UsuarioController {
         return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
-
     @RequestMapping("/logout")
     public @ResponseBody ResponseEntity getById(@RequestHeader("sessionid") String sessionId) {
         sessionData.removeSession(sessionId);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
-
+    @RequestMapping(value = "/registrar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addUsuario(@RequestBody UsuarioRequest request) {
+        try {
+            usuarioService.newUsuario(request.getNombreUsuario(), request.getPassword(), request.getEmailAlternativo() );
+            return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

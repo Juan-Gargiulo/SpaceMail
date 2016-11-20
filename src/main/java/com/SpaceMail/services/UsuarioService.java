@@ -21,4 +21,12 @@ public class UsuarioService {
     public Usuario login(String nombreUsuario, String password) {
         return usuarioDao.get(nombreUsuario,password);
     }
+
+    public void newUsuario(String nombreUsuario, String password, String emailAlternativo){
+        Usuario u = new Usuario();
+        u.setNombreUsuario(nombreUsuario);
+        u.setPassword(password);
+        u.setEmailAlternativo(emailAlternativo);
+        this.usuarioDao.save(u);
+    }
 }

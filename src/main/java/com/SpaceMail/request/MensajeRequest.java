@@ -9,17 +9,12 @@ import java.util.ArrayList;
  */
 public class MensajeRequest {
 
-
-    //private Usuario remitente;
-    //private List<Usuario> recipientes;
-
     @JsonProperty("asunto")
     private String asunto;
     @JsonProperty("mensage")
     private String mensage;
     @JsonProperty("recipientes")
-    private
-    ArrayList<Integer> recipientes;
+    private ArrayList<Integer> recipientes;
 
 
 //    public Usuario getRemitente() {
