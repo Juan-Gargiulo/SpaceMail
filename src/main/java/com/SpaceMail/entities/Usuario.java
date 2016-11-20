@@ -8,17 +8,15 @@ import javax.persistence.*;
 
 
 @Entity
-@Embeddable
 @Table(name = "usuarios")
 public class Usuario {
 
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+
     private String nombreUsuario;
     private String password;
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id_usuario" , unique = true, nullable=false)
     public int getId() {
         return this.id;
     }

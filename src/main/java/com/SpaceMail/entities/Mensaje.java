@@ -8,11 +8,20 @@ import java.util.List;
  * Created by juan on 11/18/16.
  */
 @Entity
-@Table(name = "usuarios")
+@Table(name = "mensajes")
 public class Mensaje {
 
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_usuario")
     private Usuario remitente;
+
+    @OneToMany
+    @JoinTable(name="mensaje_usuario",
+               joinColumns=@JoinColumn(name="id_mensaje"),
+               inverseJoinColumns=@JoinColumn(name="id_usuario"))
     private List<Usuario> recipientes;
     private String asunto;
     private String mensage;
@@ -22,9 +31,7 @@ public class Mensaje {
     public Mensaje(){
     }
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id_mensage" , unique = true, nullable=false)
+
     public int getId() {
         return id;
     }
@@ -33,8 +40,6 @@ public class Mensaje {
         this.id = id;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
     public Usuario getRemitente() {
         return remitente;
     }
@@ -43,10 +48,7 @@ public class Mensaje {
         this.remitente = remitente;
     }
 
-    @ElementCollection
-    @CollectionTable(
-            name="usuarios"
-    )
+
     public List<Usuario> getRecipientes() {
         return recipientes;
     }

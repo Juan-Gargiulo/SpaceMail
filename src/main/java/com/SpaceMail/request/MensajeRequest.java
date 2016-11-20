@@ -2,6 +2,8 @@ package com.SpaceMail.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+
 /**
  * Created by juan on 11/18/16.
  */
@@ -15,6 +17,9 @@ public class MensajeRequest {
     private String asunto;
     @JsonProperty("mensage")
     private String mensage;
+    @JsonProperty("recipientes")
+    private
+    ArrayList<Integer> recipientes;
 
 
 //    public Usuario getRemitente() {
@@ -50,10 +55,11 @@ public class MensajeRequest {
     }
 
 
+    public ArrayList<Integer> getRecipientes() {
+        return recipientes;
+    }
 
-
-
-
-
-
+    public void setRecipientes(ArrayList<Integer> recipientes) {
+        this.recipientes = recipientes;
+    }
 }
