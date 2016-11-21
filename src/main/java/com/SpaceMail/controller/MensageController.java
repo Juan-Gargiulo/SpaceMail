@@ -25,7 +25,7 @@ public class MensageController {
     @Autowired
     MensajeService mensajeService;
 
-    /*@RequestMapping(value = "/mensaje", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/mensaje", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addMensaje(@RequestBody MensajeRequest request) {
         try {
             mensajeService.newMensaje(request.getAsunto(), request.getMensage(), request.getRemitente(), request.getRecipientes() );
@@ -44,5 +44,5 @@ public class MensageController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-*/
+
 }

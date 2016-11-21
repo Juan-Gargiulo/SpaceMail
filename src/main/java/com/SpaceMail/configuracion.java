@@ -33,7 +33,7 @@ public class configuracion {
     public FilterRegistrationBean myFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(authFilter);
-        registration.addUrlPatterns("/api/*");
+        registration.addUrlPatterns("/api/nojodas/*");
         return registration;
     }
 

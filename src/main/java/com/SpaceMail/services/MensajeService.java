@@ -24,6 +24,12 @@ public class MensajeService {
         this.mensajeDao = dao;
     }
 
+    public List<Mensaje> getOutbox(String mail){
+
+        return mensajeDao.getOutbox(mail);
+
+    }
+
     public List<Mensaje> getInbox(String mail){
 
         return mensajeDao.getInbox(mail);

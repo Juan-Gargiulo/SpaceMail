@@ -21,12 +21,16 @@ public class MensajeDao extends AbstractDao<Mensaje> {
         super(sessionFactory);
     }
 
+    public List<Mensaje> getOutbox(String mail){
+        Session session = this.sessionFactory.openSession();
+        List<Mensaje> lista = session.createQuery("from Mensaje where remitente.nombreUsuario = :usuario").setParameter("usuario", mail).list();
+
+        return lista;
+    }
+
     public List<Mensaje> getInbox(String mail) {
 
         Session session = this.sessionFactory.openSession();
-
-        System.out.println("usuario:" + mail);
-
 
         Query query = session.createSQLQuery(
                 "select m.* from usuarios u " +

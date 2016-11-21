@@ -47,10 +47,19 @@ public class UsuarioController {
     @Qualifier("usuarioConverter")
     IUsuarioConverter usuarioConverter;
 
-
     @RequestMapping("/api/{mail}/inbox")
     public @ResponseBody ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("mail") String mail) {
         List<Mensaje> mensajes = mensajeService.getInbox(mail);
+        if (mensajes.size()>0) {
+            return new ResponseEntity<List<MensajeResponse>>(this.convertList(mensajes), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<MensajeResponse>>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @RequestMapping("/api/{mail}/outbox")
+    public @ResponseBody ResponseEntity<List<MensajeResponse>> getOutbox(@PathVariable("mail") String mail) {
+        List<Mensaje> mensajes = mensajeService.getOutbox(mail);
         if (mensajes.size()>0) {
             return new ResponseEntity<List<MensajeResponse>>(this.convertList(mensajes), HttpStatus.OK);
         } else {
