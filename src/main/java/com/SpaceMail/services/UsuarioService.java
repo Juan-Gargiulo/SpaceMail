@@ -36,12 +36,16 @@ public class UsuarioService {
         u.setPassword(password);
         u.setNombre(nombre);
         u.setApellido(apellido);
-        u.setDirección(direccion);
+        u.setDireccion(direccion);
         u.setTeléfono(telefono);
         u.setEmailAlternativo(emailAlternativo);
         Ciudad c = new Ciudad();
         c.setId(id_ciudad);
         u.setCiudad(c);
         this.usuarioDao.save(u);
+    }
+
+    public Usuario buscarUsuarioRuta(String mail) {
+        return usuarioDao.getByNombreUsuario(mail);
     }
 }

@@ -1,10 +1,12 @@
 package com.SpaceMail.controller;
 
 import com.SpaceMail.converter.IMensajeConverter;
+import com.SpaceMail.converter.IUsuarioConverter;
 import com.SpaceMail.entities.Mensaje;
 import com.SpaceMail.entities.Usuario;
 import com.SpaceMail.response.LoginResponseWrapper;
 import com.SpaceMail.response.MensajeResponse;
+import com.SpaceMail.response.UsuarioResponse;
 import com.SpaceMail.services.MensajeService;
 import com.SpaceMail.services.UsuarioService;
 import com.SpaceMail.util.SessionData;
@@ -39,7 +41,11 @@ public class UsuarioController {
 
     @Autowired
     @Qualifier("mensajeConverter")
-    IMensajeConverter converter;
+    IMensajeConverter mensajeConverter;
+
+    @Autowired
+    @Qualifier("usuarioConverter")
+    IUsuarioConverter usuarioConverter;
 
 
     @RequestMapping("/api/{id}/inbox")
@@ -102,12 +108,23 @@ public class UsuarioController {
         }
     }
 
+    // busca los datos del usuario a partir del nombre de usuario
+    @RequestMapping(value = "/api/usuario/{mail}", method = RequestMethod.GET)
+    public ResponseEntity getUsuario(@RequestBody @PathVariable("mail") String mail) {
+        try {
+            Usuario auxUsuario = usuarioService.buscarUsuarioRuta(mail);
+            return new ResponseEntity<UsuarioResponse>(usuarioConverter.convert(auxUsuario), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<UsuarioResponse>(HttpStatus.NO_CONTENT);
+        }
+    }
+
 
     // convierte una lista de mensajes en una lista de mensajes de response.
     private List<MensajeResponse> convertList(List<Mensaje> mensajes ){
         List<MensajeResponse> mensajeResponseList = new ArrayList<MensajeResponse>();
         for (Mensaje m : mensajes) {
-            mensajeResponseList.add(converter.convert(m));
+            mensajeResponseList.add(mensajeConverter.convert(m));
         }
         return mensajeResponseList;
     }

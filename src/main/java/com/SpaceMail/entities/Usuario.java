@@ -20,7 +20,7 @@ public class Usuario {
 
     private String nombre;
     private String apellido;
-    private String dirección;
+    private String direccion;
     private String telefono;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -74,12 +74,12 @@ public class Usuario {
     }
 
     @Column(name="direccion", length = 30)
-    public String getDirección() {
-        return dirección;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirección(String dirección) {
-        this.dirección = dirección;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     @Column(name="telefono", length = 30)

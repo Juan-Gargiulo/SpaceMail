@@ -15,7 +15,7 @@ public class UsuarioResponse {
     @JsonProperty
     private String apellido;
     @JsonProperty
-    private String dirección;
+    private String direccion;
     @JsonProperty
     private String teléfono;
     @JsonProperty
@@ -47,12 +47,12 @@ public class UsuarioResponse {
         this.apellido = apellido;
     }
 
-    public String getDirección() {
-        return dirección;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirección(String dirección) {
-        this.dirección = dirección;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getTeléfono() {

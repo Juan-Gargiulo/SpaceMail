@@ -50,4 +50,16 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return null;
         }
     }
+
+    public Usuario getByNombreUsuario(String mail)
+    {
+        Session session = this.sessionFactory.openSession();
+        List<Usuario> list = session.createQuery("FROM Usuario where nombreUsuario = :nU").setParameter("nU",mail).list();
+        session.close();
+        if (list.size() == 1) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
 }

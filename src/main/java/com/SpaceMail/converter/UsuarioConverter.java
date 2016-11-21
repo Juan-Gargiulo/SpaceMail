@@ -24,7 +24,7 @@ public class UsuarioConverter implements IUsuarioConverter {
         r.setCiudad( c );
         //
 
-        r.setDirección( u.getDirección() );
+        r.setDireccion( u.getDireccion() );
         r.setEmailAlternativo( u.getEmailAlternativo() );
         r.setTeléfono( u.getTelefono() );
 
