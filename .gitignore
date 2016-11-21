@@ -13,4 +13,6 @@
 
 # Maven
 log/
-target
+target/
+
+/src/main/resources/hibernate.cfg.xml

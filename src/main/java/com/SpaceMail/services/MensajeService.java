@@ -36,13 +36,11 @@ public class MensajeService {
 
     }
 
-    public void newMensaje(String asunto, String mensaje, Integer id_remitente, ArrayList<Integer> recipientes) throws ParseException {
+    public void newMensaje(String asunto, String mensaje, Usuario rem, ArrayList<Integer> recipientes) throws ParseException {
 
         Mensaje m = new Mensaje();
         m.setAsunto(asunto);
         m.setMensage(mensaje);
-        Usuario rem = new Usuario();
-        rem.setId(id_remitente);
         m.setRemitente(rem);
 
         //cargo los recipientes

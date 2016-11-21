@@ -4,6 +4,7 @@ import com.SpaceMail.converter.IMensajeConverter;
 import com.SpaceMail.converter.IUsuarioConverter;
 import com.SpaceMail.entities.Mensaje;
 import com.SpaceMail.entities.Usuario;
+import com.SpaceMail.request.MensajeRequest;
 import com.SpaceMail.response.LoginResponseWrapper;
 import com.SpaceMail.response.MensajeResponse;
 import com.SpaceMail.response.UsuarioResponse;
@@ -111,6 +112,19 @@ public class UsuarioController {
                     emailAlternativo
             );
 
+            return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Guardar Mensaje nuevo POST
+    @RequestMapping(value = "/api/usuario/{mail}/mensaje", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addMensaje(@RequestBody MensajeRequest request, @PathVariable("mail") String mail) {
+        try {
+            Usuario remitente = usuarioService.buscarUsuarioRuta(mail);
+            System.out.println(remitente.getNombre());
+            mensajeService.newMensaje(request.getAsunto(), request.getMensage(), remitente, request.getRecipientes());
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
