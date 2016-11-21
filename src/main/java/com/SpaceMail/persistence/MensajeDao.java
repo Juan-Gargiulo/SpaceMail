@@ -21,18 +21,20 @@ public class MensajeDao extends AbstractDao<Mensaje> {
         super(sessionFactory);
     }
 
-    public List<Mensaje> getInbox(Integer id) {
+    public List<Mensaje> getInbox(String mail) {
 
         Session session = this.sessionFactory.openSession();
 
-        System.out.println("dao:" + id);
+        System.out.println("usuario:" + mail);
+
 
         Query query = session.createSQLQuery(
-                "select * from mensajes m join mensaje_usuario mu " +
-                        "on m.id = mu.id_mensaje " +
-                        "where mu.id_usuario = :usuario")
+                "select m.* from usuarios u " +
+                        "inner join mensaje_usuario mu on u.id = mu.id_usuario " +
+                        "inner join mensajes m on m.id = mu.id_mensaje " +
+                        "where u.nombreUsuario = :usuario")
                 .addEntity(Mensaje.class)
-                .setParameter("usuario", id);
+                .setParameter("usuario", mail);
 
         List<Mensaje> result = query.list();
         return result;

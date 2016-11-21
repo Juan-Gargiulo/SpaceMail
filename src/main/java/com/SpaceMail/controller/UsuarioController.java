@@ -48,9 +48,9 @@ public class UsuarioController {
     IUsuarioConverter usuarioConverter;
 
 
-    @RequestMapping("/api/{id}/inbox")
-    public @ResponseBody ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("id") Integer id) {
-        List<Mensaje> mensajes = mensajeService.getInbox(id);
+    @RequestMapping("/api/{mail}/inbox")
+    public @ResponseBody ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("mail") String mail) {
+        List<Mensaje> mensajes = mensajeService.getInbox(mail);
         if (mensajes.size()>0) {
             return new ResponseEntity<List<MensajeResponse>>(this.convertList(mensajes), HttpStatus.OK);
         } else {
