@@ -18,10 +18,10 @@ public class Mensaje {
     @JoinColumn(name = "id_usuario")
     private Usuario remitente;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "mensaje_usuario",
             joinColumns = @JoinColumn(name = "id_mensaje"),
-            inverseJoinColumns = @JoinColumn(name = "id_usuario"))
+            inverseJoinColumns = @JoinColumn(name = "id_usuario", unique = false))
     private List<Usuario> recipientes;
     private String asunto;
     private String mensage;
