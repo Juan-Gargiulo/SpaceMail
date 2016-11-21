@@ -21,7 +21,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String dirección;
-    private String teléfono;
+    private String telefono;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_ciudad")
@@ -83,12 +83,12 @@ public class Usuario {
     }
 
     @Column(name="telefono", length = 30)
-    public String getTeléfono() {
-        return teléfono;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setTeléfono(String teléfono) {
-        this.teléfono = teléfono;
+    public void setTeléfono(String telefono) {
+        this.telefono = telefono;
     }
 
     public Ciudad getCiudad() {

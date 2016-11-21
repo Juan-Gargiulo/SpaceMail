@@ -1,5 +1,9 @@
 package com.SpaceMail;
 
+import com.SpaceMail.converter.IMensajeConverter;
+import com.SpaceMail.converter.IUsuarioConverter;
+import com.SpaceMail.converter.MensajeConverter;
+import com.SpaceMail.converter.UsuarioConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +18,16 @@ public class configuracion {
 
     @Autowired
     AuthFilter authFilter;
+
+    @Bean(name="usuarioConverter")
+    public IUsuarioConverter getUsuarioConverter(){
+        return new UsuarioConverter();
+    }
+
+    @Bean(name="mensajeConverter")
+    public IMensajeConverter getNormalConverter(){
+        return  new MensajeConverter();
+    }
 
     @Bean
     public FilterRegistrationBean myFilter() {

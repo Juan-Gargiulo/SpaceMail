@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by juan on 11/18/16.
@@ -21,6 +22,12 @@ public class MensajeService {
     @Autowired
     public MensajeService(MensajeDao dao) {
         this.mensajeDao = dao;
+    }
+
+    public List<Mensaje> getInbox(Integer id){
+
+        return mensajeDao.getInbox(id);
+
     }
 
     public void newMensaje(String asunto, String mensaje, Integer id_remitente, ArrayList<Integer> recipientes) throws ParseException {
