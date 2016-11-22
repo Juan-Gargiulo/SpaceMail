@@ -41,7 +41,7 @@ public class MensageController {
     @Qualifier("mensajeConverter")
     IMensajeConverter mensajeConverter;
 
-    @RequestMapping("/{mail}/inbox")
+    @RequestMapping("/usuario/{mail}/inbox")
     public
     @ResponseBody
     ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("mail") String mail,
@@ -58,7 +58,7 @@ public class MensageController {
         }
     }
 
-    @RequestMapping("/{mail}/outbox")
+    @RequestMapping("/usuario/{mail}/outbox")
     public
     @ResponseBody
     ResponseEntity<List<MensajeResponse>> getOutbox(@PathVariable("mail") String mail,
