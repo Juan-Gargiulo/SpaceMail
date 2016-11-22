@@ -21,7 +21,7 @@ public class MensajeDao extends AbstractDao<Mensaje> {
         super(sessionFactory);
     }
 
-    public List<Mensaje> getOutbox(String mail){
+    public List<Mensaje> getOutbox(String mail) {
         Session session = this.sessionFactory.openSession();
         List<Mensaje> lista = session.createQuery("from Mensaje where remitente.nombreUsuario = :usuario").setParameter("usuario", mail).list();
 
@@ -56,6 +56,16 @@ public class MensajeDao extends AbstractDao<Mensaje> {
         Session session = this.sessionFactory.openSession();
         Transaction t = session.beginTransaction();
         session.save(m);
+        t.commit();
+        session.close();
+    }
+
+    public void delete(Integer idMensaje) {
+        Mensaje m = new Mensaje();
+        m.setId(idMensaje);
+        Session session = this.sessionFactory.openSession();
+        Transaction t = session.beginTransaction();
+        session.delete(m);
         t.commit();
         session.close();
     }

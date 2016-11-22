@@ -1,16 +1,9 @@
 package com.SpaceMail.controller;
 
-import com.SpaceMail.converter.IMensajeConverter;
 import com.SpaceMail.converter.IUsuarioConverter;
-import com.SpaceMail.entities.Mensaje;
 import com.SpaceMail.entities.Usuario;
-import com.SpaceMail.request.MensajeRequest;
-import com.SpaceMail.response.LoginResponseWrapper;
-import com.SpaceMail.response.MensajeResponse;
 import com.SpaceMail.response.UsuarioResponse;
-import com.SpaceMail.services.MensajeService;
 import com.SpaceMail.services.UsuarioService;
-import com.SpaceMail.util.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -18,15 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by juan on 11/18/16.
  */
 @RestController
 @RequestMapping(
-        value = "/",
+        value = "/api",
         produces = MediaType.APPLICATION_JSON_VALUE
 )
 public class UsuarioController {
@@ -35,113 +25,11 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @Autowired
-    MensajeService mensajeService;
-
-    @Autowired
-    SessionData sessionData;
-
-    @Autowired
-    @Qualifier("mensajeConverter")
-    IMensajeConverter mensajeConverter;
-
-    @Autowired
     @Qualifier("usuarioConverter")
     IUsuarioConverter usuarioConverter;
 
-    @RequestMapping("/api/{mail}/inbox")
-    public @ResponseBody ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("mail") String mail,
-                                                                        @RequestHeader("usuario") String mailHeader) {
-        //valido que sea el usuario logueado
-        if( !mail.equals(mailHeader)){
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-        List<Mensaje> mensajes = mensajeService.getInbox(mail);
-        if (mensajes.size()>0) {
-            return new ResponseEntity<List<MensajeResponse>>(this.convertList(mensajes), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<List<MensajeResponse>>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @RequestMapping("/api/{mail}/outbox")
-    public @ResponseBody ResponseEntity<List<MensajeResponse>> getOutbox(@PathVariable("mail") String mail,
-                                                                         @RequestHeader("usuario") String mailHeader) {
-
-        //valido que sea el usuario logueado
-        if( !mail.equals(mailHeader)){
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-        List<Mensaje> mensajes = mensajeService.getOutbox(mail);
-        if (mensajes.size()>0) {
-            return new ResponseEntity<List<MensajeResponse>>(this.convertList(mensajes), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<List<MensajeResponse>>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    ResponseEntity<LoginResponseWrapper> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd) {
-        Usuario u = usuarioService.login(nombreUsuario, pwd);
-        if (null != u) {
-            String sessionId = sessionData.addSession(u);
-            return new ResponseEntity<LoginResponseWrapper>(new LoginResponseWrapper(sessionId), HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-    }
-
-    @RequestMapping("/logout")
-    public
-    @ResponseBody
-    ResponseEntity getById(@RequestHeader("sessionid") String sessionId) {
-        sessionData.removeSession(sessionId);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
-    }
-
-
-    @RequestMapping(value = "/registrar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    //public ResponseEntity addUsuario(@RequestBody UsuarioRequest request) {
-    public ResponseEntity addUsuario(@RequestParam("usr") String nombreUsuario,
-                                     @RequestParam("pwd") String password,
-                                     @RequestParam("apellido") String apellido,
-                                     @RequestParam("nombre") String nombre,
-                                     @RequestParam("direccion") String direccion,
-                                     @RequestParam("tel") String telefono,
-                                     @RequestParam("ciudad") Integer ciudad,
-                                     @RequestParam("emailAlt") String emailAlternativo) {
-        try {
-            usuarioService.newUsuario(
-                    nombreUsuario,
-                    password,
-                    nombre,
-                    apellido,
-                    direccion,
-                    telefono,
-                    ciudad,
-                    emailAlternativo
-            );
-
-            return new ResponseEntity(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Guardar Mensaje nuevo POST
-    @RequestMapping(value = "/api/usuario/{mail}/mensaje", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addMensaje(@RequestBody MensajeRequest request, @PathVariable("mail") String mail) {
-        try {
-            Usuario remitente = usuarioService.buscarUsuarioRuta(mail);
-            mensajeService.newMensaje(request.getAsunto(), request.getMensage(), remitente, request.getRecipientes());
-            return new ResponseEntity(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     // busca los datos del usuario a partir del nombre de usuario
-    @RequestMapping(value = "/api/usuario/{mail}", method = RequestMethod.GET)
+    @RequestMapping(value = "/usuario/{mail}", method = RequestMethod.GET)
     public ResponseEntity getUsuario(@RequestBody @PathVariable("mail") String mail) {
         try {
             Usuario auxUsuario = usuarioService.buscarUsuarioRuta(mail);
@@ -150,16 +38,5 @@ public class UsuarioController {
             return new ResponseEntity<UsuarioResponse>(HttpStatus.NO_CONTENT);
         }
     }
-
-
-    // convierte una lista de mensajes en una lista de mensajes de response.
-    private List<MensajeResponse> convertList(List<Mensaje> mensajes ){
-        List<MensajeResponse> mensajeResponseList = new ArrayList<MensajeResponse>();
-        for (Mensaje m : mensajes) {
-            mensajeResponseList.add(mensajeConverter.convert(m));
-        }
-        return mensajeResponseList;
-    }
-
 
 }

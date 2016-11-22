@@ -24,13 +24,13 @@ public class MensajeService {
         this.mensajeDao = dao;
     }
 
-    public List<Mensaje> getOutbox(String mail){
+    public List<Mensaje> getOutbox(String mail) {
 
         return mensajeDao.getOutbox(mail);
 
     }
 
-    public List<Mensaje> getInbox(String mail){
+    public List<Mensaje> getInbox(String mail) {
 
         return mensajeDao.getInbox(mail);
 
@@ -53,5 +53,9 @@ public class MensajeService {
         m.setRecipientes(recipPersist);
 
         this.mensajeDao.save(m);
+    }
+
+    public void deleteMensaje(Integer idMensaje) {
+        mensajeDao.delete(idMensaje);
     }
 }

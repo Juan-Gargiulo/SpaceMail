@@ -18,10 +18,10 @@ public class Mensaje {
     @JoinColumn(name = "id_usuario")
     private Usuario remitente;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "mensaje_usuario",
             joinColumns = @JoinColumn(name = "id_mensaje"),
-            inverseJoinColumns = @JoinColumn(name = "id_usuario", unique = false))
+            inverseJoinColumns = @JoinColumn(name = "id_usuario"))
     private List<Usuario> recipientes;
     private String asunto;
     private String mensage;

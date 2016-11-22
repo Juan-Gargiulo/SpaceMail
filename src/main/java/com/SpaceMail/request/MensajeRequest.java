@@ -17,6 +17,8 @@ public class MensajeRequest {
     private String mensage;
     @JsonProperty("recipientes")
     private ArrayList<Integer> recipientes;
+    @JsonProperty("id")
+    private Integer idMensaje;
 
 
     public Integer getRemitente() {
@@ -55,4 +57,7 @@ public class MensajeRequest {
     }
 
 
+    public Integer getIdMensaje() {return idMensaje;}
+
+    public void setIdMensaje(Integer idMensaje) {this.idMensaje = idMensaje;}
 }
