@@ -49,7 +49,12 @@ public class UsuarioController {
     IUsuarioConverter usuarioConverter;
 
     @RequestMapping("/api/{mail}/inbox")
-    public @ResponseBody ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("mail") String mail) {
+    public @ResponseBody ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("mail") String mail,
+                                                                        @RequestHeader("usuario") String mailHeader) {
+        //valido que sea el usuario logueado
+        if( !mail.equals(mailHeader)){
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
         List<Mensaje> mensajes = mensajeService.getInbox(mail);
         if (mensajes.size()>0) {
             return new ResponseEntity<List<MensajeResponse>>(this.convertList(mensajes), HttpStatus.OK);
@@ -59,7 +64,13 @@ public class UsuarioController {
     }
 
     @RequestMapping("/api/{mail}/outbox")
-    public @ResponseBody ResponseEntity<List<MensajeResponse>> getOutbox(@PathVariable("mail") String mail) {
+    public @ResponseBody ResponseEntity<List<MensajeResponse>> getOutbox(@PathVariable("mail") String mail,
+                                                                         @RequestHeader("usuario") String mailHeader) {
+
+        //valido que sea el usuario logueado
+        if( !mail.equals(mailHeader)){
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
         List<Mensaje> mensajes = mensajeService.getOutbox(mail);
         if (mensajes.size()>0) {
             return new ResponseEntity<List<MensajeResponse>>(this.convertList(mensajes), HttpStatus.OK);
@@ -100,7 +111,6 @@ public class UsuarioController {
                                      @RequestParam("ciudad") Integer ciudad,
                                      @RequestParam("emailAlt") String emailAlternativo) {
         try {
-            System.out.println("controler usuario:" + nombreUsuario);
             usuarioService.newUsuario(
                     nombreUsuario,
                     password,
@@ -123,7 +133,6 @@ public class UsuarioController {
     public ResponseEntity addMensaje(@RequestBody MensajeRequest request, @PathVariable("mail") String mail) {
         try {
             Usuario remitente = usuarioService.buscarUsuarioRuta(mail);
-            System.out.println(remitente.getNombre());
             mensajeService.newMensaje(request.getAsunto(), request.getMensage(), remitente, request.getRecipientes());
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
