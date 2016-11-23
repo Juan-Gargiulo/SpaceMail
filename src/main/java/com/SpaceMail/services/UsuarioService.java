@@ -18,7 +18,7 @@ public class UsuarioService {
         this.usuarioDao = dao;
     }
 
-    public Usuario login(String nombreUsuario, String password) {
+    public Usuario login(String nombreUsuario, String password) throws Exception {
         return usuarioDao.get(nombreUsuario, password);
     }
 
@@ -29,7 +29,7 @@ public class UsuarioService {
                            String direccion,
                            String telefono,
                            Integer id_ciudad,
-                           String emailAlternativo) {
+                           String emailAlternativo) throws Exception {
 
         Usuario u = new Usuario();
         u.setNombreUsuario(nombreUsuario);
@@ -45,7 +45,7 @@ public class UsuarioService {
         this.usuarioDao.save(u);
     }
 
-    public Usuario buscarUsuarioRuta(String mail) {
+    public Usuario buscarUsuarioRuta(String mail) throws Exception {
         return usuarioDao.getByNombreUsuario(mail);
     }
 
@@ -54,16 +54,15 @@ public class UsuarioService {
                                   String apellido,
                                   String direccion,
                                   String telefono,
-                                  String emailAlternativo){
+                                  String emailAlternativo) throws Exception {
         Usuario u = new Usuario();
-        u.setNombreUsuario(nombreUsuario);
+        u = buscarUsuarioRuta(nombreUsuario);
         u.setNombre(nombre);
         u.setApellido(apellido);
         u.setDireccion(direccion);
         u.setTeléfono(telefono);
         u.setEmailAlternativo(emailAlternativo);
-        Ciudad c = new Ciudad();
-        u.setCiudad(c);
+        System.out.println(u.getId() + u.getNombreUsuario() + u.getNombre());
         usuarioDao.actualizarUsuario(u);
     }
 }

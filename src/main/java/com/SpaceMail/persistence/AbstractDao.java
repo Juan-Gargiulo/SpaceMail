@@ -17,6 +17,6 @@ public abstract class AbstractDao<K> {
 
     abstract List<K> getAll();
     abstract K getById(int id);
-    abstract void save(K value);
+    abstract void save(K value) throws Exception;
 
 }

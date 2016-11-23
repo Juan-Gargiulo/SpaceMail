@@ -41,7 +41,7 @@ public class MensageController {
     public
     @ResponseBody
     ResponseEntity<List<MensajeResponse>> getInbox(@PathVariable("mail") String mail,
-                                                   @RequestHeader("usuario") String mailHeader) {
+                                                   @RequestHeader("usuario") String mailHeader) throws Exception {
         //valido que sea el usuario logueado
         if (!mail.equals(mailHeader)) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -58,7 +58,7 @@ public class MensageController {
     public
     @ResponseBody
     ResponseEntity<List<MensajeResponse>> getOutbox(@PathVariable("mail") String mail,
-                                                    @RequestHeader("usuario") String mailHeader) {
+                                                    @RequestHeader("usuario") String mailHeader) throws Exception {
 
         //valido que sea el usuario logueado
         if (!mail.equals(mailHeader)) {

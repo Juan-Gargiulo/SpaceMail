@@ -31,41 +31,65 @@ public class UsuarioDao extends AbstractDao<Usuario> {
     }
 
     @Override
-    public void save(Usuario u) {
-        Session session = this.sessionFactory.openSession();
-        Transaction t = session.beginTransaction();
-        session.save(u);
-        t.commit();
-        session.close();
-    }
-
-    public Usuario get(String nombreUsuario, String password) {
-
-        Session session = this.sessionFactory.openSession();
-        List<Usuario> list = session.createQuery("FROM Usuario where nombreUsuario = :u and password = :p").setParameter("u",nombreUsuario).setParameter("p",password).list();
-        session.close();
-        if (list.size() == 1) {
-            return list.get(0);
-        } else {
-            return null;
+    public void save(Usuario u) throws Exception {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
+            Transaction t = session.beginTransaction();
+            session.save(u);
+            t.commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
         }
     }
 
-    public Usuario getByNombreUsuario(String mail)
-    {
-        Session session = this.sessionFactory.openSession();
-        List<Usuario> list = session.createQuery("FROM Usuario where nombreUsuario = :nU").setParameter("nU",mail).list();
-        session.close();
-        if (list.size() == 1) {
-            return list.get(0);
-        } else {
-            return null;
+    public Usuario get(String nombreUsuario, String password) throws Exception {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
+            List<Usuario> list = session.createQuery("FROM Usuario where nombreUsuario = :u and password = :p").setParameter("u", nombreUsuario).setParameter("p", password).list();
+            if (list.size() == 1) {
+                return list.get(0);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
         }
     }
 
-    public void actualizarUsuario(Usuario usuario){
-        Session session = this.sessionFactory.openSession();
-        session.update(usuario);
-        session.close();
+    public Usuario getByNombreUsuario(String mail) throws Exception {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
+            List<Usuario> list = session.createQuery("FROM Usuario where nombreUsuario = :nU").setParameter("nU", mail).list();
+            if (list.size() == 1) {
+                return list.get(0);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    public void actualizarUsuario(Usuario usuario) throws Exception {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
+            Transaction t = session.beginTransaction();
+            session.update(usuario);
+            t.commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 }

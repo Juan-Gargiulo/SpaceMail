@@ -21,28 +21,39 @@ public class MensajeDao extends AbstractDao<Mensaje> {
         super(sessionFactory);
     }
 
-    public List<Mensaje> getOutbox(String mail) {
-        Session session = this.sessionFactory.openSession();
-        List<Mensaje> lista = session.createQuery("from Mensaje where remitente.nombreUsuario = :usuario").setParameter("usuario", mail).list();
-        session.close();
-        return lista;
+    public List<Mensaje> getOutbox(String mail) throws Exception {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
+            List<Mensaje> lista = session.createQuery("from Mensaje where remitente.nombreUsuario = :usuario").setParameter("usuario", mail).list();
+            return lista;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
-    public List<Mensaje> getInbox(String mail) {
+    public List<Mensaje> getInbox(String mail) throws Exception {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
 
-        Session session = this.sessionFactory.openSession();
+            Query query = session.createSQLQuery(
+                    "select m.* from usuarios u " +
+                            "inner join mensaje_usuario mu on u.id = mu.id_usuario " +
+                            "inner join mensajes m on m.id = mu.id_mensaje " +
+                            "where u.nombreUsuario = :usuario")
+                    .addEntity(Mensaje.class)
+                    .setParameter("usuario", mail);
 
-        Query query = session.createSQLQuery(
-                "select m.* from usuarios u " +
-                        "inner join mensaje_usuario mu on u.id = mu.id_usuario " +
-                        "inner join mensajes m on m.id = mu.id_mensaje " +
-                        "where u.nombreUsuario = :usuario")
-                .addEntity(Mensaje.class)
-                .setParameter("usuario", mail);
-
-        List<Mensaje> result = query.list();
-        session.close();
-        return result;
+            List<Mensaje> result = query.list();
+            return result;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
     List<Mensaje> getAll() {
@@ -53,21 +64,33 @@ public class MensajeDao extends AbstractDao<Mensaje> {
         return null;
     }
 
-    public void save(Mensaje m) {
-        Session session = this.sessionFactory.openSession();
-        Transaction t = session.beginTransaction();
-        session.save(m);
-        t.commit();
-        session.close();
+    public void save(Mensaje m) throws Exception {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
+            Transaction t = session.beginTransaction();
+            session.save(m);
+            t.commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
-    public void delete(Integer idMensaje) {
-        Mensaje m = new Mensaje();
-        m.setId(idMensaje);
-        Session session = this.sessionFactory.openSession();
-        Transaction t = session.beginTransaction();
-        session.delete(m);
-        t.commit();
-        session.close();
+    public void delete(Integer idMensaje) throws Exception {
+        Session session = null;
+        try {
+            Mensaje m = new Mensaje();
+            m.setId(idMensaje);
+            session = this.sessionFactory.openSession();
+            Transaction t = session.beginTransaction();
+            session.delete(m);
+            t.commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 }

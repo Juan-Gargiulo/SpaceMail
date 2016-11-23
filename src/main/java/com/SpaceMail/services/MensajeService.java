@@ -24,19 +24,19 @@ public class MensajeService {
         this.mensajeDao = dao;
     }
 
-    public List<Mensaje> getOutbox(String mail) {
+    public List<Mensaje> getOutbox(String mail) throws Exception {
 
         return mensajeDao.getOutbox(mail);
 
     }
 
-    public List<Mensaje> getInbox(String mail) {
+    public List<Mensaje> getInbox(String mail) throws Exception {
 
         return mensajeDao.getInbox(mail);
 
     }
 
-    public void newMensaje(String asunto, String mensaje, Usuario rem, ArrayList<Integer> recipientes) throws ParseException {
+    public void newMensaje(String asunto, String mensaje, Usuario rem, ArrayList<Integer> recipientes) throws Exception {
 
         Mensaje m = new Mensaje();
         m.setAsunto(asunto);
@@ -55,7 +55,7 @@ public class MensajeService {
         this.mensajeDao.save(m);
     }
 
-    public void deleteMensaje(Integer idMensaje) {
+    public void deleteMensaje(Integer idMensaje) throws Exception {
         mensajeDao.delete(idMensaje);
     }
 }

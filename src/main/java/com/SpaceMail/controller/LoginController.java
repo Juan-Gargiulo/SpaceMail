@@ -29,11 +29,11 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseEntity<LoginResponseWrapper> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd) {
+    ResponseEntity<LoginResponseWrapper> getById(@RequestParam("user") String nombreUsuario, @RequestParam("pwd") String pwd) throws Exception {
         Usuario u = usuarioService.login(nombreUsuario, pwd);
         if (null != u) {
             String sessionId = sessionData.addSession(u);
-            return new ResponseEntity<LoginResponseWrapper>(new LoginResponseWrapper(sessionId), HttpStatus.OK);
+            return new ResponseEntity<LoginResponseWrapper>(new LoginResponseWrapper(sessionId), HttpStatus.ACCEPTED);
         }
         return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
