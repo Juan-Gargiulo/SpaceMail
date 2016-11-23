@@ -2,6 +2,7 @@ package com.SpaceMail.controller;
 
 import com.SpaceMail.converter.IUsuarioConverter;
 import com.SpaceMail.entities.Usuario;
+import com.SpaceMail.request.UsuarioRequest;
 import com.SpaceMail.response.UsuarioResponse;
 import com.SpaceMail.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,18 @@ public class UsuarioController {
         try {
             Usuario auxUsuario = usuarioService.buscarUsuarioRuta(mail);
             return new ResponseEntity<UsuarioResponse>(usuarioConverter.convert(auxUsuario), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<UsuarioResponse>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    // Update del Usuario
+    @RequestMapping(value = "/usuario/{mail}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity putUsuario(@RequestBody UsuarioRequest request, @PathVariable("mail") String mail) {
+
+        try {
+            usuarioService.actualizarUsuario(request.getNombreUsuario(), request.getNombre(), request.getApellido(), request.getDireccion(), request.getTelefono(), request.getEmailAlternativo());
+            return new ResponseEntity<UsuarioResponse>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<UsuarioResponse>(HttpStatus.NO_CONTENT);
         }

@@ -19,6 +19,8 @@ public class configuracion {
     @Autowired
     AuthFilter authFilter;
 
+
+    //esto me parece que no va
     @Bean(name="usuarioConverter")
     public IUsuarioConverter getUsuarioConverter(){
         return new UsuarioConverter();

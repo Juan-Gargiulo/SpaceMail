@@ -1,17 +1,13 @@
 package com.SpaceMail.controller;
 
 import com.SpaceMail.converter.IMensajeConverter;
-import com.SpaceMail.converter.IUsuarioConverter;
 import com.SpaceMail.entities.Mensaje;
 import com.SpaceMail.entities.Usuario;
 import com.SpaceMail.request.MensajeRequest;
 import com.SpaceMail.response.MensajeResponse;
 import com.SpaceMail.services.MensajeService;
 import com.SpaceMail.services.UsuarioService;
-import com.SpaceMail.util.SessionData;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +34,7 @@ public class MensageController {
     MensajeService mensajeService;
 
     @Autowired
-    @Qualifier("mensajeConverter")
+    //@Qualifier("mensajeConverter")
     IMensajeConverter mensajeConverter;
 
     @RequestMapping("/usuario/{mail}/inbox")
@@ -78,7 +74,15 @@ public class MensageController {
 
     // Guardar Mensaje nuevo POST
     @RequestMapping(value = "/usuario/{mail}/mensaje", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addMensaje(@RequestBody MensajeRequest request, @PathVariable("mail") String mail) {
+    public ResponseEntity addMensaje(@RequestBody MensajeRequest request,
+                                     @PathVariable("mail") String mail,
+                                     @RequestHeader("usuario") String mailHeader)
+    {
+
+        //valido que sea el usuario logueado
+        if (!mail.equals(mailHeader)) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
         try {
             Usuario remitente = usuarioService.buscarUsuarioRuta(mail);
             mensajeService.newMensaje(request.getAsunto(), request.getMensage(), remitente, request.getRecipientes());
@@ -99,7 +103,14 @@ public class MensageController {
 
     // Borrar Mensaje
     @RequestMapping(value = "/usuario/{mail}/mensaje", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteMensaje(@RequestBody MensajeRequest request) {
+    public ResponseEntity deleteMensaje(@RequestBody MensajeRequest request,
+                                        @PathVariable("mail") String mail,
+                                        @RequestHeader("usuario") String mailHeader) {
+
+        //valido que sea el usuario logueado
+        if (!mail.equals(mailHeader)) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
         try {
             mensajeService.deleteMensaje(request.getIdMensaje());
             return new ResponseEntity(HttpStatus.OK);

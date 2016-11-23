@@ -1,7 +1,6 @@
 package com.SpaceMail.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by User on 20/11/2016.
@@ -13,10 +12,14 @@ public class UsuarioRequest {
     private String nombreUsuario;
     @JsonProperty("pwd")
     private String password;
+    @JsonProperty("nombre")
+    private String nombre;
     @JsonProperty("apellido")
     private String apellido;
     @JsonProperty("direccion")
     private String direccion;
+    @JsonProperty("tel")
+    private String telefono;
     @JsonProperty("ciudad")
     private Integer ciudad;
     @JsonProperty("emailAlt")
@@ -70,5 +73,21 @@ public class UsuarioRequest {
 
     public void setEmailAlternativo(String emailAlternativo) {
         this.emailAlternativo = emailAlternativo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

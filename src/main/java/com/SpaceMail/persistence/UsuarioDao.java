@@ -62,4 +62,10 @@ public class UsuarioDao extends AbstractDao<Usuario> {
             return null;
         }
     }
+
+    public void actualizarUsuario(Usuario usuario){
+        Session session = this.sessionFactory.openSession();
+        session.update(usuario);
+        session.close();
+    }
 }

@@ -48,4 +48,22 @@ public class UsuarioService {
     public Usuario buscarUsuarioRuta(String mail) {
         return usuarioDao.getByNombreUsuario(mail);
     }
+
+    public void actualizarUsuario(String nombreUsuario,
+                                  String nombre,
+                                  String apellido,
+                                  String direccion,
+                                  String telefono,
+                                  String emailAlternativo){
+        Usuario u = new Usuario();
+        u.setNombreUsuario(nombreUsuario);
+        u.setNombre(nombre);
+        u.setApellido(apellido);
+        u.setDireccion(direccion);
+        u.setTeléfono(telefono);
+        u.setEmailAlternativo(emailAlternativo);
+        Ciudad c = new Ciudad();
+        u.setCiudad(c);
+        usuarioDao.actualizarUsuario(u);
+    }
 }
