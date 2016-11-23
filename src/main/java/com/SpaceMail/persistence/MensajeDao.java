@@ -24,7 +24,7 @@ public class MensajeDao extends AbstractDao<Mensaje> {
     public List<Mensaje> getOutbox(String mail) {
         Session session = this.sessionFactory.openSession();
         List<Mensaje> lista = session.createQuery("from Mensaje where remitente.nombreUsuario = :usuario").setParameter("usuario", mail).list();
-
+        session.close();
         return lista;
     }
 
@@ -41,6 +41,7 @@ public class MensajeDao extends AbstractDao<Mensaje> {
                 .setParameter("usuario", mail);
 
         List<Mensaje> result = query.list();
+        session.close();
         return result;
     }
 

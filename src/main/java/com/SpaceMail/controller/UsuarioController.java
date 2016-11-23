@@ -42,10 +42,14 @@ public class UsuarioController {
 
     // Update del Usuario
     @RequestMapping(value = "/usuario/{mail}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity putUsuario(@RequestBody UsuarioRequest request, @PathVariable("mail") String mail) {
+    public ResponseEntity putUsuario(@RequestBody UsuarioRequest request, @PathVariable("mail") String mail, @RequestHeader("usuario") String mailHeader) {
 
+        //valido que sea el usuario logueado
+        if (!mail.equals(mailHeader)) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
         try {
-            usuarioService.actualizarUsuario(request.getNombreUsuario(), request.getNombre(), request.getApellido(), request.getDireccion(), request.getTelefono(), request.getEmailAlternativo());
+            usuarioService.actualizarUsuario(mail, request.getNombre(), request.getApellido(), request.getDireccion(), request.getTelefono(), request.getEmailAlternativo());
             return new ResponseEntity<UsuarioResponse>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<UsuarioResponse>(HttpStatus.NO_CONTENT);
