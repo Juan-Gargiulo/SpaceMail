@@ -14,11 +14,11 @@ public class Mensaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private Usuario remitente;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany//(cascade = CascadeType.ALL)
     @JoinTable(name = "mensaje_usuario",
             joinColumns = @JoinColumn(name = "id_mensaje"),
             inverseJoinColumns = @JoinColumn(name = "id_usuario"))
