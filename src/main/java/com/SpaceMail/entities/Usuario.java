@@ -23,7 +23,7 @@ public class Usuario {
     private String direccion;
     private String telefono;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name="id_ciudad")
     private Ciudad ciudad;
 
